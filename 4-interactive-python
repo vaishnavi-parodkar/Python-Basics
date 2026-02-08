@@ -1,0 +1,46 @@
+Interactive Python
+It combines the organization of Python files with the interactivity of Jupyter notebooks.
+​
+What is Interactive Python?
+
+Write code in a .py file (organized and clean)
+Run pieces of it instantly with Shift + Enter
+See results immediately in a side panel
+Keep all your variables in memory
+​
+When working with AI and data:
+You’re constantly inspecting data
+Testing transformations
+Checking outputs
+Experimenting with different approaches
+Running an entire file every time would be slow and frustrating. Interactive mode lets you work iteratively.
+​
+Prerequisites
+Interactive Python requires the IPython kernel. 
+Make sure your virtual environment is activated:
+# You should see (venv) in your terminal
+Install the required package:
+pip install ipykernel
+This package allows Jupyter to run Python code interactively.
+​
+Set up Interactive Python
+Now let’s enable the interactive feature:
+Open VS Code settings:
+Press Ctrl/Cmd + , (comma)
+Or File > Preferences > Settings
+Search for “execute selection”
+Find this setting: Jupyter > Interactive Window > Text Editor: Execute Selection
+Check the box to enable it
+What this does: When you press Shift + Enter, your selected code will run in the Jupyter interactive window instead of the Python terminal. This gives you a much richer, more visual experience.
+That’s it! You’re ready to use interactive mode.
+​
+
+Interactive superpowers
+​- Run selected code
+- Highlight any code
+- Press Shift + Enter
+- Only that selection runs
+​
+Variables stay in memory
+
+The variable message stays available throughout your session!
