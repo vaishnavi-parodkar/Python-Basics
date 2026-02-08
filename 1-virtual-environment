@@ -1,0 +1,16 @@
+Steps to create virtual environment
+method 1: vs code command palette
+1. open ur project in VS code
+2. Press Ctrl+shift+P
+3. Type "Python: Create Environment"
+4. Select "Venv"
+5. Select your Python installation
+6. VS Code creates and activates everything for you
+
+
+when working on different projects at the same time and these projects need different version then we use this virtual environment which allows us to use different versions
+
+method 2: Terminal Command
+1. open terminal in VS code (view>terminal)
+2. Make sure u r in ur project folder
+3. Run this command: python -m venv .venv
