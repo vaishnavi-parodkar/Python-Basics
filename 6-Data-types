@@ -1,0 +1,148 @@
+# Data types
+"""
+four main data types:
+1) Numbers for counting and calculations
+2) Text for words and messages
+3) True/False for decisions
+
+The main types
+1) Numbers: Integers and decimals for math
+2) Strings: Text, words, and characters
+3) Booleans: True or False values
+
+# Numbers can do math
+total = 10 + 5  # 15
+
+# Strings combine differently  
+name = "Hello" + "World"  # "HelloWorld"
+
+# Can't mix without converting
+# age = "25" + 5  # Error!
+age = int("25") + 5  # 30 (converted string to number)
+
+# Check different types
+print(type(42))          # <class 'int'>
+print(type(3.14))        # <class 'float'>
+print(type("Hello"))     # <class 'str'>
+print(type(True))        # <class 'bool'>
+
+# Check variables
+age = 25
+name = "Alice"
+print(type(age))         # <class 'int'>
+print(type(name))        # <class 'str'>
+
+Two types of numbers
+1) Integers - Whole numbers without decimals
+age = 25
+score = -10
+2) Floats - Numbers with decimal points
+price = 19.99
+temperature = -5.5
+pi = 3.14159
+
+Note: Writing 3,14 creates a tuple, not the number 3.14!
+
+Python separates integers and floats for efficiency - computers can work with whole numbers faster and more precisely. Python handles the conversion automatically when needed.
+
+Basic math operations
+Numbers work just like a calculator:
+# Addition and subtraction
+total = 10 + 5     # 15
+change = 20 - 7    # 13
+
+# Multiplication and division
+area = 6 * 4       # 24
+half = 10 / 2      # 5.0 (always returns float)
+
+# Powers
+squared = 5 ** 2   # 25
+cubed = 2 ** 3     # 8
+
+Integer vs float division
+Division has two forms:
+# Regular division (always float)
+result = 10 / 3    # 3.333...
+
+# Integer division (rounds down)
+result = 10 // 3   # 3
+
+Strings: use single or double quotes, just be consistent.
+name = "Alice"
+message = 'Hello, World!'
+
+Creating strings
+Three ways to make strings:
+# Single quotes
+
+# Double quotes  
+
+# Triple quotes for multiple lines
+
+Use double quotes when your text contains
+- apostrophes: "It's Python!"
+- Combining strings
+- Join strings together with +:
+    first_name = "John"
+    last_name = "Doe"
+
+# Concatenation
+full_name = first_name + " " + last_name
+print(full_name)  # John Doe
+
+# Repetition
+stars = "*" * 5
+print(stars)  # *****
+
+String length
+Use len() to count characters:
+message = "Hello"
+print(len(message))  # 5
+
+empty = ""
+print(len(empty))    # 0
+
+Converting to string
+Turn other types into strings with str():
+age = 25
+message = "I am " + str(age) + " years old"
+print(message)  # I am 25 years old
+
+# Or use f-strings 
+message = f"I am {age} years old"
+
+Booleans
+True and False values
+
+is_logged_in = True
+is_admin = False
+has_permission = True
+Boolean values are True and False with capital letters. Using true or false will cause an error!
+
+Creating booleans
+Booleans often come from comparisons:
+# Direct assignment
+is_ready = True
+
+# From comparisons
+age = 18
+can_vote = age >= 18  # True
+
+score = 75
+passed = score > 60   # True
+
+Comparison operators
+These operators compare values and return True or False:
+age = 25
+
+# Equality
+print(age == 25)     # True - equals
+print(age != 30)     # True - not equals
+
+# Greater/Less than
+print(age > 20)      # True - greater than
+print(age < 30)      # True - less than
+print(age >= 25)     # True - greater or equal
+print(age <= 25)     # True - less or equal
+Remember: = assigns a value, while == compares values. This is a common source of bugs!
+"""
