@@ -1,0 +1,41 @@
+Variables: store information. You give it a name and put a value inside. Later, you can use that name to get the value back.
+
+Creating your first variable
+name = "Alice"
+age = 25
+is_student = True
+
+Naming rules
+Allowed:
+user_name = "xyz"      # lowercase with underscores (Python style)
+userName = "xyz"       # camelCase (works but not Python style)
+age2 = 30              # numbers are OK (not at start)
+_private = "secret"    # underscore at start is OK
+Not allowed:
+2age = 30              # Can't start with number
+my-name = "xyz"       # No hyphens (Python thinks it's subtraction)
+my name = "xyz"       # No spaces
+class = "Python"       # Can't use Python keywords
+
+Python naming convention
+In Python, we use lowercase letters with underscores between words. This is called “snake_case” and it's the standard way to name variables in Python.
+
+# Good Python style
+first_name = "Alice"
+user_age = 25
+is_logged_in = True
+shopping_cart_total = 49.99
+
+Changing variables
+Variables can change (that's why they're called variables!):
+# Start with one value
+score = 0
+print(score)  # Shows: 0
+
+# Change it
+score = 10
+print(score)  # Shows: 10
+
+# Change it again
+score = score + 5
+print(score)  # Shows: 15
