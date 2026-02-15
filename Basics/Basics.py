@@ -89,6 +89,54 @@ else:
 for i in range(5):
     print(i)
 
-
 for i in range(1,6):
     print(i)
+
+for i in range(0,10,2):
+    print(i)
+
+# Data Structures
+# 1. Lists
+# 2. Dictionaries
+# 3. Tuples
+# 4. Sets
+
+
+# Lists
+my_list = ["Alice", 25, age, True, has_license]
+name_alice = my_list[0]
+age = my_list[1]
+has_license=my_list[-2]
+
+# Dictionary
+person = {
+    "name": "Alice",
+    "age": 25,
+    "city": "New York"
+}
+person["name"] = "Diya"
+person["licence"]=True
+del person["licence"]
+
+
+# empty tuple
+empty = ()
+#  Tuples with items
+point = (3,5)
+colors = ("red","green","blue")
+# colors[0]="black" gives error 
+
+
+# Sets
+# empty set 
+empty_set = set()
+
+# set with values 
+numbers_set={1,2,3,4,5}
+fruits_set=(["apple","banana","orange"])
+
+# From list (removes duplicates)
+scores_list=[85,90,85,92,90]
+unique_scores = set(scores_list)
+
+
