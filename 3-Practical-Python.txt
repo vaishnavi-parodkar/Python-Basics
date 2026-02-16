@@ -1,0 +1,340 @@
+Project structure: Organize your Python projects
+​
+Working with multiple files
+
+Create a sales-analysis folder
+Inside sales-analysis, create these subfolders:
+python-for-ai/
+├── hello.py              # Your existing practice file
+└── sales-analysis/       # New project folder
+    ├── data/             # CSV files and data
+    └── output/           # Generated files
+Create folders in VS Code by right-clicking in the Explorer panel and selecting “New Folder”, or click the new folder icon at the top of the Explorer.
+​
+Create the data file
+Inside your sales-analysis/data folder, create a file called sales.csv:
+date,product,quantity,price
+2024-01-01,Laptop,2,999.99
+2024-01-01,Mouse,5,29.99
+2024-01-02,Keyboard,3,79.99
+2024-01-02,Monitor,1,299.99
+2024-01-03,Laptop,1,999.99
+2024-01-03,Mouse,10,29.99
+2024-01-04,Keyboard,2,79.99
+2024-01-05,Monitor,2,299.99
+Copy and paste this data into a new file called sales.csv in your data folder. Make sure the file extension is .csv, not .txt.
+​
+Understanding file paths
+When your code needs to find files, you need to understand paths:
+# When your script runs from sales-analysis folder
+"data/sales.csv"           # Look in the data subfolder
+"output/report.json"       # Save to the output subfolder
+
+# Your project structure
+# python-for-ai/
+#   └── sales-analysis/
+#       ├── analyzer.py      <- Your script is here
+#       ├── data/sales.csv   <- Your data is here
+#       └── output/          <- Results go here
+​
+Create your first script
+In the sales-analysis folder (not in a subfolder), create analyzer.py:
+import os
+
+# Check if we're in the right place
+print("Current directory:", os.getcwd())
+
+# Check if our data file exists
+data_path = "data/sales.csv"
+if os.path.exists(data_path):
+    print(f"✅ Found {data_path}")
+else:
+    print(f"❌ Cannot find {data_path}")
+    print("Make sure you're running from the sales-analysis folder!")
+​
+Running your code
+In VS Code, you have two simple ways to run Python code:
+​
+Option 1: The play button
+Open analyzer.py in VS Code
+Click the ▶️ (play) button in the top right
+The code runs and shows output in the terminal below
+​
+Option 2: Interactive mode (recommended)
+Open analyzer.py in VS Code
+Select the code you want to run (or place cursor on a line)
+Press Shift+Enter
+Code runs in the interactive window with instant feedback
+Interactive mode (Shift+Enter) is great for testing code step by step. You can run one line at a time and see results immediately!
+By keeping analyzer.py in the same folder as data and output, the file paths stay simple and work with both the play button and interactive mode.
+​
+Best practices
+Keep data separate - Don’t mix code and data files
+Use clear names - data for input files, output for results
+Simple structure - Keep your main script at the project level
+Test as you go - Use Shift+Enter to run code step by step
+
+Python paths
+Understanding how Python finds files
+
+​
+The most confusing part of Python
+Understanding paths is probably the most confusing part when starting with Python. You’ll make mistakes with file paths and imports, and that’s totally fine. That’s how everyone learns.
+This page gives you a quick introduction. Some parts might not be completely clear right now, but as you practice, it will click. Come back to this page when you run into path issues - it happens to everyone!
+​
+The mental model
+When working with multiple files, always think about two things:
+Where am I? - What folder is my Python script in?
+Where do I want to go? - What file or module do I need?
+Then navigate:
+Going down into subfolders: Use / for files, . for imports
+Going up to parent folders: Use ../ for files, add to sys.path for imports
+Same folder: Just use the filename
+# From script.py, accessing different locations:
+"data/sales.csv"        # Down into data folder
+"../config.json"        # Up one level
+"helper.py"             # Same folder
+
+# For imports:
+import helper           # Same folder - no path needed!
+import data.processor   # Down into data folder
+
+# Parent folder imports need sys.path:
+import sys
+sys.path.append("..")   # Add parent to path
+import parent_module    # Now you can import
+​
+The simple rule
+When Python runs, it has a “current working directory” - the folder it’s currently in. All file paths start from there.
+import os
+
+# See where Python is right now
+print(os.getcwd())
+Try this - it shows you exactly where Python is looking for files.
+​
+Finding your files
+Let’s say you have this structure:
+my-project/
+├── script.py
+├── data.txt
+└── folder/
+    └── other.txt
+If you run script.py:
+# Python can find these:
+open("data.txt")           # Same folder
+open("folder/other.txt")   # Subfolder
+
+# Python CAN'T find these (they don't exist from here):
+open("other.txt")          # Wrong! It's in a subfolder
+open("../parent.txt")      # Looking in parent folder
+​
+Files vs modules - key difference
+Python handles regular files and Python modules differently:
+Regular files (CSV, TXT, JSON):
+Use open() or file-reading functions
+Need the exact path from your current directory
+Use forward slashes: data/sales.csv
+# Reading a CSV file - needs exact path
+with open("data/sales.csv", "r") as file:
+    content = file.read()
+Python modules (importing code):
+Use import statements
+Python searches in multiple locations (sys.path)
+Use dots instead of slashes: folder.module
+# Importing a module - Python searches for it
+import mymodule                    # Looks for mymodule.py
+from folder.utils import helper    # Looks for folder/utils.py
+​
+How Python finds modules
+Python looks for modules (other .py files) in specific places. You can see these places:
+import sys
+print(sys.path)  # List of folders Python checks
+The list includes:
+The folder containing your script
+Python’s built-in library folders
+Installed packages
+​
+Adding your own folders
+Sometimes you need Python to look in additional places:
+import sys
+
+# Add a folder to Python's search path
+sys.path.append("/path/to/my/folder")
+
+# Now you can import from that folder
+import mymodule
+Common example - importing from a parent folder:
+import sys
+import os
+
+# Go up one level from current script
+parent = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(parent)
+​
+​
+Working with files
+Read, process, and write data files
+
+​
+Files in AI projects
+When working with Python for AI, you’ll constantly work with data files. Your data might come as:
+CSV files - Spreadsheet data from Excel or databases
+JSON files - API responses and configuration data
+XML files - Structured data from various systems
+Text files - Raw text for processing
+Parquet files - Efficient data storage format
+The good news? Python has excellent libraries for all of these.
+​
+Common libraries for files
+Each file type has specialized libraries:
+CSV files:
+pandas - Best for data analysis (recommended)
+csv module - Built-in, for simple operations
+JSON files:
+json module - Built-in, handles all JSON operations
+pandas - Can read/write JSON with DataFrames
+Other formats:
+xml.etree - Built-in XML parsing
+openpyxl - Excel files (.xlsx)
+PyPDF2 - PDF files
+​
+Working with our sales data
+CSV file convert it to different formats. First, install pandas:
+pip install pandas
+If you get an error, try pip3 install pandas or install it through VS Code’s terminal.
+Update your analyzer.py:
+import pandas as pd
+import json
+import os
+
+# Read the CSV file
+df = pd.read_csv('data/sales.csv')
+print("CSV Data:")
+print(df)
+print(f"\nShape: {df.shape[0]} rows, {df.shape[1]} columns")
+
+# Quick operation: calculate total for each row
+df['total'] = df['quantity'] * df['price']
+print("\nWith totals:")
+print(df)
+
+# Create output directory
+os.makedirs('output', exist_ok=True)
+
+# Save as different formats
+# 1. JSON format (good for web APIs)
+df.to_json('output/sales_data.json', orient='records', indent=2)
+
+# 2. Excel format (good for sharing)
+df.to_excel('output/sales_data.xlsx', index=False)
+
+# 3. Updated CSV (with our new total column)
+df.to_csv('output/sales_with_totals.csv', index=False)
+
+print("\nFiles saved:")
+print("- output/sales_data.json")
+print("- output/sales_data.xlsx") 
+print("- output/sales_with_totals.csv")
+​
+File format comparison
+Different formats have different uses:
+# JSON - Great for APIs and web applications
+{
+  "date": "2024-01-01",
+  "product": "Laptop",
+  "quantity": 2,
+  "price": 999.99
+}
+
+# CSV - Simple, universal, good for data analysis
+date,product,quantity,price
+2024-01-01,Laptop,2,999.99
+
+# Excel - Feature-rich, good for business users
+# (Binary format with formatting, formulas, etc.)
+​
+Loading different file types
+Here’s how to load various formats:
+# CSV
+df = pd.read_csv('data/file.csv')
+
+# JSON
+df = pd.read_json('data/file.json')
+# or for simple JSON:
+with open('data/config.json', 'r') as f:
+    data = json.load(f)
+
+# Excel
+df = pd.read_excel('data/file.xlsx')
+
+# Text files
+with open('data/file.txt', 'r') as f:
+    text = f.read()
+​
+Learn more
+To dive deeper into file handling:
+Pandas documentation - Comprehensive data handling
+Python JSON module - Official JSON docs
+Real Python file I/O - Detailed tutorial
+CSV module docs - Built-in CSV handling
+
+
+Organizing code
+Split code into reusable functions
+
+​
+Split your code into functions and separate files.
+Benefits:
+Reusable - Write once, use many times
+Readable - Main script stays simple and clear
+Testable - Easy to test individual functions
+​
+Creating helper functions
+create simple helper functions for our sales analysis. In your sales-analysis folder, create a new file called helpers.py:
+# helpers.py
+
+def calculate_total(quantity, price):
+    """Calculate total for a single item"""
+    return quantity * price
+
+def format_currency(amount):
+    """Format number as currency"""
+    return f"${amount:,.2f}"
+The :.2f in the format string rounds floating point numbers to 2 decimal places - perfect for displaying money!
+That’s it! Two simple functions that do one thing each.
+​
+Using your functions
+Now update analyzer.py to use these helpers:
+# analyzer.py
+import pandas as pd
+from helpers import calculate_total, format_currency
+
+# Read data
+df = pd.read_csv('data/sales.csv')
+
+# Calculate total for each row
+totals = []
+for index, row in df.iterrows():
+    total = calculate_total(row['quantity'], row['price'])
+    totals.append(total)
+
+# Add totals to our data
+df['total'] = totals
+
+# Display with formatted totals
+print("Sales Data:")
+for index, row in df.iterrows():
+    formatted_total = format_currency(row['total'])
+    print(f"{row['product']}: {formatted_total}")
+
+# Show grand total
+grand_total = df['total'].sum()
+formatted_grand_total = format_currency(grand_total)
+print(f"\nGrand Total: {formatted_grand_total}")
+​
+How imports work
+When you write from helpers import calculate_total:
+Python looks for helpers.py in the same folder
+It runs that file and makes the functions available
+You can now use calculate_total() directly
+The file must be in the same folder for this simple import to work. We covered more complex imports in the Python paths section.

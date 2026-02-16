@@ -1,0 +1,238 @@
+Error handling: Handle errors gracefully
+
+​
+Errors happen. Files might not exist, APIs might be down, users might enter invalid data. Error handling lets your program deal with these problems gracefully instead of crashing.
+​
+Where do errors come from?
+Errors you make as a programmer:
+Typos and syntax mistakes (VS Code shows yellow squiggly lines)
+Logic errors like dividing by zero (only show up when code runs)
+Using variables before defining them
+Calling methods that don’t exist
+Errors beyond your control:
+User enters “abc” when you need a number
+File gets deleted after your program starts
+Internet connection drops during API call
+External service returns unexpected data
+You might think “why not just write correct code?” But even perfect code needs error handling because the world is unpredictable. Users do unexpected things, networks fail, and files disappear.
+​
+Types of errors
+Syntax errors happen when Python can’t understand your code:
+# Missing colon
+if x > 5  # SyntaxError
+    print("Big number")
+Runtime errors happen when your code runs:
+# Division by zero
+result = 10 / 0  # ZeroDivisionError
+
+# Variable doesn't exist
+print(score)  # NameError
+
+# Wrong type
+"hello" + 5  # TypeError
+​
+Why handle errors?
+Here’s a program that crashes:
+# This will crash if the file doesn't exist
+with open('data.txt', 'r') as f:
+    content = f.read()
+print("Done!")  # Never reaches here if file missing
+Here’s a program that handles the error:
+# This keeps running even if file doesn't exist
+try:
+    with open('data.txt', 'r') as f:
+        content = f.read()
+except FileNotFoundError:
+    print("Could not find data.txt")
+    content = "default data"
+print("Done!")  # Always reaches here
+
+
+Try and except
+Catch errors before they crash
+
+​
+Basic try-except structure
+The try block contains code that might fail. The except block runs if an error happens:
+try:
+    # Code that might cause an error
+    risky_operation()
+except:
+    # Code that runs if there's an error
+    print("Something went wrong")
+​
+Catching specific errors
+Different errors need different handling. Catch specific error types:
+try:
+    age = int(input("Enter your age: "))
+    print(f"In 10 years, you'll be {age + 10}")
+except ValueError:
+    print("Please enter a number")
+​
+Multiple error types
+Handle different errors differently:
+try:
+    # Read a number from a file
+    with open('number.txt', 'r') as f:
+        text = f.read()
+    number = int(text)
+    result = 100 / number
+    print(f"Result: {result}")
+except FileNotFoundError:
+    print("Could not find number.txt")
+except ValueError:
+    print("File doesn't contain a valid number")
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+​
+The else clause
+Code in else runs only if no error happened:
+try:
+    with open('data.txt', 'r') as f:
+        data = f.read()
+except FileNotFoundError:
+    print("File not found")
+else:
+    # This only runs if the file was opened successfully
+    print(f"File has {len(data)} characters")
+​
+The finally clause
+Code in finally always runs, error or not:
+try:
+    file = open('data.txt', 'r')
+    data = file.read()
+except FileNotFoundError:
+    print("File not found")
+finally:
+    # This always runs to clean up
+    if 'file' in locals() and not file.closed:
+        file.close()
+    print("Cleanup complete")
+Don’t catch all errors with a bare except:. It hides problems and makes debugging harder. Always catch specific error types when possible.
+​
+
+
+​
+Errors you’ll encounter
+
+​
+FileNotFoundError
+Happens when a file doesn’t exist:
+# This fails if file doesn't exist
+with open('missing.txt', 'r') as f:
+    content = f.read()
+Fix:
+import os
+
+# Check first
+if os.path.exists('data.txt'):
+    with open('data.txt', 'r') as f:
+        content = f.read()
+else:
+    print("File not found")
+
+# Or use try-except
+try:
+    with open('data.txt', 'r') as f:
+        content = f.read()
+except FileNotFoundError:
+    content = ""  # Default value
+​
+ValueError
+Happens when a value is wrong type or format:
+# These cause ValueError
+int("hello")        # Can't convert to number
+int("12.5")         # int() doesn't accept decimals
+list.remove("x")    # Item not in list
+Fix:
+# Validate user input
+try:
+    age = int(input("Age: "))
+except ValueError:
+    print("Please enter a number")
+
+# Convert carefully
+float_str = "12.5"
+number = int(float(float_str))  # Convert to float first
+​
+KeyError
+Happens when a dictionary key doesn’t exist:
+user = {"name": "Alice", "age": 25}
+print(user["email"])  # KeyError - no email key
+Fix:
+# Check if key exists
+if "email" in user:
+    print(user["email"])
+
+# Use get() with default
+email = user.get("email", "no-email@example.com")
+
+# Or handle the error
+try:
+    print(user["email"])
+except KeyError:
+    print("Email not found")
+​
+IndexError
+Happens when accessing invalid list position:
+numbers = [1, 2, 3]
+print(numbers[5])  # IndexError - only 3 items
+Fix:
+# Check length first
+if len(numbers) > 5:
+    print(numbers[5])
+
+# Use negative indexing carefully
+last_item = numbers[-1] if numbers else None
+
+# Handle the error
+try:
+    print(numbers[5])
+except IndexError:
+    print("List too short")
+​
+TypeError
+Happens when operations use wrong types:
+# These cause TypeError
+"hello" + 5            # Can't add string and number
+len(42)                # Numbers don't have length
+int([1, 2, 3])         # Can't convert list to int
+Fix:
+# Convert types explicitly
+"hello" + str(5)       # "hello5"
+str(42)                # "42"
+
+# Check type first
+if isinstance(value, str):
+    print(len(value))
+​
+AttributeError
+Happens when accessing non-existent attributes:
+text = "hello"
+text.append("!")  # AttributeError - strings don't have append
+Fix:
+# Use correct methods
+text = "hello"
+text = text + "!"  # Strings are immutable
+
+# Check if attribute exists
+if hasattr(obj, 'append'):
+    obj.append(item)
+Error messages are your friends! They tell you:
+What went wrong (error type)
+Where it happened (file and line number)
+Why it happened (error message)
+Always read the full error message before trying to fix it.
+​
+Reading error messages
+Python error messages show a “traceback”:
+Traceback (most recent call last):
+  File "script.py", line 5, in <module>
+    result = 10 / 0
+ZeroDivisionError: division by zero
+Read from bottom to top:
+Error type: ZeroDivisionError
+Error message: division by zero
+Location: script.py, line 5
+Code that failed: result = 10 / 0
+​

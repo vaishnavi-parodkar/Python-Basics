@@ -1,0 +1,399 @@
+Classes: Create your own data types
+Object-oriented programming (OOP) is a way to organize code by grouping related data and functions together. Instead of having separate variables and functions scattered around, you bundle them into objects.
+
+A class is a blueprint for creating objects. It defines:
+Attributes: What data the object stores
+Methods: What the object can do
+# Without classes - data and functions separate
+name = "OpenAI"
+model = "gpt-4o-mini"
+
+def generate_response(prompt):
+    # Process prompt...
+    return response
+
+# With classes - everything bundled together
+class OpenAIClient:
+    def __init__(self, name, model):
+        self.name = name
+        self.model = model
+    
+    def generate_response(self, prompt):
+        # Process prompt...
+        return response
+​
+Classes help you write more understandable programs as they grow. Here’s the typical progression of a Python developer:
+1. Single file scripts (where you started):
+# everything.py - All code in one file
+api_key = "sk-..."
+prompt = "Explain Python"
+response = make_api_call(api_key, prompt)
+print(response)
+2. Functions (where you are now):
+# main.py - Organized with functions
+def setup_api(key):
+    return {"key": key, "base_url": "https://api.openai.com"}
+
+def generate_response(api_config, prompt):
+    # Make API call
+    return response
+
+api = setup_api("sk-...")
+result = generate_response(api, "Explain Python")
+3. Multiple files (getting organized):
+# api_utils.py
+def setup_api(key):
+    return {"key": key, "base_url": "https://api.openai.com"}
+
+# main.py
+from api_utils import setup_api
+api = setup_api("sk-...")
+4. Classes (where we are now):
+# client.py
+class OpenAIClient:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.base_url = "https://api.openai.com"
+    
+    def generate(self, prompt):
+        # All logic encapsulated here
+        return response
+
+# main.py
+from client import OpenAIClient
+client = OpenAIClient("sk-...")
+response = client.generate("Explain Python")
+In the context of AI, classes specifically help you:
+Build clean interfaces to APIs
+Manage complex data pipelines
+Create reusable components
+Organize stateful operations
+
+
+Your first class
+Create a simple class
+
+
+Working with classes follows a simple pattern:
+Define the class - Create a blueprint with the class keyword
+Add an __init__ method - Set up initial data when objects are created
+Create instances - Make actual objects from your class
+Access the data - Use the attributes you defined
+
+​
+Basic class structure
+Every class starts with the class keyword:
+class Dog:  # Note: class names use PascalCase
+    pass  # Empty class
+​
+Adding an initializer
+The __init__ method runs when you create a new object:
+class Dog:
+    def __init__(self, name, breed):
+        self.name = name
+        self.breed = breed
+
+# Create dog objects - using positional arguments
+dog1 = Dog("Buddy", "Golden Retriever")
+dog2 = Dog("Max", "Beagle")
+
+# Or with named arguments (clearer)
+dog3 = Dog(name="Charlie", breed="Poodle")
+
+print(dog1.name)   # Buddy
+print(dog2.breed)  # Beagle
+ __init__ This is called a “dunder” method (double underscore). 
+
+
+self refers to the current object. It’s how an object keeps track of its own data:
+When defining methods in a class, you always include self as the first parameter. But when calling the method, you don’t pass it - Python does that automatically!
+class Dog:
+    def __init__(self, name):
+        self.name = name  # self.name belongs to this specific dog
+
+# Using positional argument
+dog1 = Dog("Buddy")
+
+# Using named argument (same result)
+dog2 = Dog(name="Max")
+
+# Each dog has its own name
+print(dog1.name)  # Buddy
+print(dog2.name)  # Max
+​
+Real-world example: configuration
+Here’s a practical class for AI engineering:
+class APIConfig:
+    def __init__(self, api_key, model="gpt-3.5-turbo", max_tokens=100):
+        self.api_key = api_key
+        self.model = model
+        self.max_tokens = max_tokens
+        self.base_url = "https://api.openai.com/v1"
+
+# Create different configurations
+# Using positional for required arg, named for optional
+dev_config = APIConfig("sk-dev-key", max_tokens=50)
+
+# Using all named arguments (clearest)
+prod_config = APIConfig(api_key="sk-prod-key", model="gpt-4", max_tokens=1000)
+
+# Access the configuration
+print(dev_config.model)        # gpt-3.5-turbo
+print(prod_config.model)       # gpt-4
+print(prod_config.max_tokens)  # 1000
+​
+Class vs instance
+Class: The blueprint (like a recipe)
+Instance/Object: What you create from the class (like a cake from the recipe)
+# APIConfig is the class
+# config1 and config2 are instances
+config1 = APIConfig(api_key="key1", max_tokens=50)
+config2 = APIConfig(api_key="key2", max_tokens=200)
+
+# Each instance has its own data
+print(config1.max_tokens)  # 50
+print(config2.max_tokens)  # 200
+
+# Changing one doesn't affect the other
+config1.max_tokens = 75
+print(config1.max_tokens)  # 75
+print(config2.max_tokens)  # 200 (unchanged)
+Always use clear, descriptive names for your classes. In Python, class names use PascalCase (like TextProcessor or DataLoader), while variable names use snake_case (like text_processor or data_loader).
+​
+
+Methods and attributes
+Add functionality to classes
+
+​
+Attributes: storing data
+Attributes are variables that belong to an object. There are two types:
+Instance attributes (unique to each object):
+class APIClient:
+    def __init__(self, api_key, base_url):
+        self.api_key = api_key      # Each client has its own key
+        self.base_url = base_url    # Each client has its own URL
+        self.request_count = 0      # Track requests per client
+
+# Creating instances with named arguments
+client1 = APIClient(api_key="key1", base_url="https://api1.com")
+client2 = APIClient(api_key="key2", base_url="https://api2.com")
+Class attributes (shared by all objects):
+class APIClient:
+    version = "1.0"              # Same for all clients
+    max_retries = 3              # Same for all clients
+    
+    def __init__(self, api_key):
+        self.api_key = api_key   # Unique to each client
+​
+Methods: adding behavior
+Methods are functions that belong to a class. They always have self as the first parameter, but you don’t pass it when calling:
+class DataValidator:
+    def __init__(self):
+        self.errors = []
+    
+    def validate_email(self, email):
+        if "@" not in email:
+            self.errors.append(f"Invalid email: {email}")
+            return False
+        return True
+    
+    def validate_age(self, age):
+        if age < 0 or age > 150:
+            self.errors.append(f"Invalid age: {age}")
+            return False
+        return True
+    
+    def get_errors(self):
+        return self.errors
+
+# Use the validator
+validator = DataValidator()
+
+# Notice: we don't pass self, just the email
+validator.validate_email(email="bad-email")
+validator.validate_age(age=200)
+
+# Or using positional arguments
+validator.validate_email("another-bad-email")
+validator.validate_age(150)
+
+print(validator.get_errors())
+# ['Invalid email: bad-email', 'Invalid age: 200', 'Invalid email: another-bad-email']
+When you call a method like validator.validate_email("test@example.com"), Python automatically passes the validator object as self. You only provide the other arguments.
+
+
+Inheritance
+Build on existing classes
+inheritance can make your code much cleaner by avoiding repetition.
+
+​
+Inheritance lets you create new classes based on existing ones. The new class (child) gets everything from the parent class, plus can add its own stuff.
+
+​
+Basic inheritance example
+# Parent class - general animal
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def eat(self):
+        return f"{self.name} is eating"
+    
+    def sleep(self):
+        return f"{self.name} is sleeping"
+
+# Child class - specific animal
+class Dog(Animal):
+    def bark(self):
+        return f"{self.name} says woof!"
+
+# Create a dog - using positional argument
+my_dog = Dog("Buddy")
+# Or with named argument
+my_dog2 = Dog(name="Max")
+
+# Dog can do animal things (inherited)
+print(my_dog.eat())    # Buddy is eating
+print(my_dog.sleep())  # Buddy is sleeping
+
+# Dog can also do dog things
+print(my_dog.bark())   # Buddy says woof!
+​
+Adding attributes in child classes
+Child classes can have their own attributes too:
+class Animal:
+    def __init__(self, name):
+        self.name = name
+        self.is_pet = True
+
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)  # Pass name to parent's __init__
+        self.breed = breed      # Dog-specific attribute
+    
+    def describe(self):
+        return f"{self.name} is a {self.breed}"
+
+# Create dogs with breeds - positional arguments
+golden = Dog("Buddy", "Golden Retriever")
+
+# Or with named arguments (clearer)
+poodle = Dog(name="Max", breed="Poodle")
+
+print(golden.describe())  # Buddy is a Golden Retriever
+print(golden.is_pet)      # True (inherited from Animal)
+super().__init__() calls the parent class’s __init__ method. This ensures the parent class sets up its attributes properly before the child class adds its own.
+​
+Overriding methods
+Child classes can change how parent methods work:
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def make_sound(self):
+        return f"{self.name} makes a sound"
+
+class Dog(Animal):
+    def make_sound(self):  # Override parent method
+        return f"{self.name} barks: Woof!"
+
+class Cat(Animal):
+    def make_sound(self):  # Override parent method
+        return f"{self.name} meows: Meow!"
+
+# Different animals, different sounds
+generic = Animal(name="Something")
+dog = Dog(name="Buddy")
+cat = Cat(name="Whiskers")
+
+print(generic.make_sound())  # Something makes a sound
+print(dog.make_sound())      # Buddy barks: Woof!
+print(cat.make_sound())      # Whiskers meows: Meow!
+​
+Real-world use case
+Here’s a practical example for AI applications:
+class BaseModel:
+    def __init__(self, model_name):
+        self.model_name = model_name
+        self.is_loaded = False
+    
+    def load(self):
+        print(f"Loading {self.model_name}...")
+        self.is_loaded = True
+
+class TextModel(BaseModel):
+    def __init__(self, model_name, max_length=1000):
+        super().__init__(model_name)
+        self.max_length = max_length
+    
+    def process_text(self, text):
+        if not self.is_loaded:
+            self.load()
+        # Truncate if needed
+        if len(text) > self.max_length:
+            text = text[:self.max_length]
+        return f"Processed: {text}"
+
+# Use the model - with named arguments
+model = TextModel(model_name="gpt-3.5-turbo", max_length=100)
+
+# Call method - notice no 'self' parameter needed
+result = model.process_text(text="Hello world")
+print(result)  # Loading gpt-3.5-turbo...
+               # Processed: Hello world​
+
+Use inheritance when:
+You have an “is a” relationship (Dog is an Animal)
+Child classes share most behavior with parent
+You want to extend functionality, not replace it
+Don’t use inheritance when:
+Classes are only slightly related
+You just want to reuse one or two methods
+The relationship feels forced​
+​
+Programming paradigms
+Python supports multiple programming styles. The two main ones are:
+Functional programming - Using functions to transform data:
+# Functions operate on data
+def clean_text(text):
+    return text.strip().lower()
+
+def remove_punctuation(text):
+    return text.replace(".", "").replace(",", "")
+
+# Chain functions together
+result = remove_punctuation(clean_text("  Hello, World.  "))
+Object-oriented programming - Using classes to bundle data and behavior:
+# Class bundles data and methods
+class TextProcessor:
+    def __init__(self, text):
+        self.text = text
+    
+    def clean(self):
+        self.text = self.text.strip().lower()
+        return self
+    
+    def remove_punctuation(self):
+        self.text = self.text.replace(".", "").replace(",", "")
+        return self
+
+# Chain methods on object
+processor = TextProcessor(text="  Hello, World.  ")
+result = processor.clean().remove_punctuation().text
+Both approaches achieve the same result! Classes don’t unlock new features - they’re just a different way to organize your code. Choose based on what makes your code clearer.
+​
+When to use classes
+Use classes when you need to:
+Keep track of state between operations
+Group related data and functions together
+Create multiple instances with similar behavior
+Model real-world objects or concepts
+​
+When to use functions
+Use functions when you have:
+Simple transformations (input → output)
+Stateless operations
+One-off calculations
+Small scripts
+Start with functions. They’re simpler and often sufficient. Only add classes when you find yourself passing the same data between multiple functions or when you need to maintain state.
+​

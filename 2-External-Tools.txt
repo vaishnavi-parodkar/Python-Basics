@@ -1,0 +1,405 @@
+External tools
+Extend Python with packages
+
+​
+Beyond built-in Python
+Python comes with many built-in functions, but its real power comes from external packages. These are pre-written code libraries that add new capabilities.
+​
+
+Packages are just Python files containing code - typically combinations of functions (which you’ve learned) and classes (coming later). When you import a package, you’re bringing that functionality into your project.
+Two types of packages:
+Built-in: Come with Python installation (already in your environment)
+External: Downloaded from the internet into your virtual environment folder
+​
+Python’s ecosystem
+Python has packages for everything:
+Web scraping: Extract data from websites
+Data analysis: Process spreadsheets and databases
+AI/ML: Build intelligent applications
+APIs: Connect to online services
+Automation: Control your computer
+​
+What you’ll learn
+Import packages
+Use external code
+Work with APIs
+Connect to services
+Working with data
+Process data efficiently
+​
+Package examples
+Here are packages you’ll likely use:
+requests - Make web requests
+pandas - Work with data tables
+beautifulsoup4 - Parse HTML
+openai - Use AI models
+python-dotenv - Manage secrets
+When you need to do something, search “Python package for [task]” and you’ll likely find options.
+​
+
+Import packages
+Use Python packages and libraries
+
+​
+Using packages
+Python packages add new functionality to your programs. There are two types:
+Built-in: Come with Python (no installation needed)
+External: Need to install first with pip
+​
+Understanding the terminology
+Let’s clarify what these terms mean:
+Module: A single Python file (like math.py)
+Package: A folder containing multiple modules
+Function: A reusable block of code (like print() or sqrt())
+Class: A blueprint for creating objects (we’ll cover this later)
+Think of it like this:
+A module is like a toolbox
+A package is like a garage with multiple toolboxes
+A function is like a specific tool (hammer, screwdriver)
+A class is like a blueprint for building tools
+​
+Import patterns explained
+# Pattern 1: Import the whole module
+import math
+# Now use: math.sqrt(16)
+
+# Pattern 2: Import specific items from a module
+from math import sqrt, pi
+# Now use: sqrt(16)
+What’s happening:
+import math - brings in the entire math toolbox
+from math import sqrt - takes just the sqrt tool from the math toolbox
+​
+Built-in modules
+Python includes many useful modules:
+# Import entire module
+import random
+
+# Use module functions
+number = random.randint(1, 10)
+choice = random.choice(["apple", "banana", "orange"])
+​
+Common built-in modules
+# Date and time
+import datetime
+today = datetime.date.today()
+print(today)  # 2024-01-15
+
+# Operating system
+import os
+current_dir = os.getcwd()
+print(current_dir)
+
+# JSON data
+import json
+data = {"name": "Alice", "age": 30}
+json_string = json.dumps(data)
+​
+Import methods
+Different ways to import:
+# Import entire module
+import math
+result = math.sqrt(16)
+
+# Import specific functions
+from math import sqrt, pi
+result = sqrt(16)
+circle_area = pi * radius ** 2
+
+# Import with alias
+import pandas as pd
+df = pd.DataFrame(data)
+
+# Import everything (avoid this!)
+from math import *
+Avoid from module import * as it can cause naming conflicts and makes code harder to understand.
+​
+Installing packages
+External packages need installation:
+# Install a package
+pip install requests
+
+# Install specific version
+pip install requests==2.28.0
+
+# Install multiple packages
+pip install pandas numpy matplotlib
+Always ensure your virtual environment is activated before installing! This is the #1 source of import errors. If you get “ModuleNotFoundError” after installing, you probably installed to the wrong environment. Learn more about virtual environments.
+​
+Sharing your project: requirements.txt
+When you share your Python project, others need to know which packages to install. The standard way is using a requirements.txt file:
+​
+Creating requirements.txt
+List all your project’s packages:
+pip freeze > requirements.txt
+This creates a file like:
+certifi==2024.2.2
+charset-normalizer==3.3.2
+idna==3.6
+requests==2.31.0
+urllib3==2.2.0
+​
+Installing from requirements.txt
+When someone gets your project, they run:
+pip install -r requirements.txt
+This installs all the packages at once!
+Later in the course, we’ll learn about uv - a modern, faster alternative to pip that makes package management even easier.
+​
+Using external packages
+After installation, import and use:
+# Web requests
+import requests
+
+response = requests.get("https://api.example.com/data")
+data = response.json()
+
+# Data analysis
+import pandas as pd
+
+# Create a simple DataFrame
+data = {
+    'name': ['Alice', 'Bob', 'Charlie'],
+    'age': [25, 30, 35],
+    'city': ['NYC', 'LA', 'Chicago']
+}
+df = pd.DataFrame(data)
+print(df)
+Always use virtual environments for projects. They prevent package conflicts between different projects.
+​
+Finding packages
+Where to find packages:
+PyPI - Official Python package index
+Awesome Python - Curated list
+ChatGPT - Ask “What Python package should I use for [task]?” - Great for recommendations and comparisons
+Google “Python package for [task]”
+ChatGPT is excellent for finding packages. Try asking: “What’s the best Python package for reading Excel files?” or “Compare pandas vs polars for data analysis.” It can explain which package to use and why.
+​
+
+Working with APIs
+Pull data from web services
+
+
+An API (Application Programming Interface) is like a waiter at a restaurant. You tell it what you want, and it brings you the data.
+But APIs do more than just fetch information. They’re the bridges that connect your code to other systems. With APIs, you can:
+Pull customer data from your CRM (Salesforce, HubSpot)
+Get order information from Shopify or WooCommerce
+Send messages through Slack or email services
+Use AI models from OpenAI or Anthropic
+In the context of AI, APIs are essential. They let you connect AI capabilities to real business data and systems.
+​
+Your first API call
+Let’s get real weather data using a free weather API:
+import requests
+
+# We need coordinates to get weather data
+latitude = 48.85   # Paris latitude
+longitude = 2.35   # Paris longitude
+
+# Build the API URL with our parameters
+url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m"
+
+# Make the request
+response = requests.get(url)
+data = response.json()
+
+print(data)
+First install requests: pip install requests
+​
+Understanding the response
+The API sends back data in JSON format (like a Python dictionary):
+{
+    'latitude': 48.84,
+    'longitude': 2.36,
+    'timezone': 'GMT',
+    'elevation': 46.0,
+    'current_units': {
+        'temperature_2m': '°C'
+    },
+    'current': {
+        'time': '2025-08-01T08:30',
+        'temperature_2m': 20.0
+    }
+}
+The temperature is nested inside current, so to get it:
+temperature = data['current']['temperature_2m']
+print(f"Temperature in Paris: {temperature}°C")
+# Output: Temperature in Paris: 20.0°C
+What is JSON? JSON (JavaScript Object Notation) is just a way to structure data, similar to CSV or Excel files. While CSV stores data in rows and columns, JSON uses key-value pairs like Python dictionaries.
+​
+Extract what you need
+Now you can pull out specific information:
+import requests
+
+def get_weather(latitude, longitude):
+    response = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,wind_speed_10m")
+    data = response.json()
+    return data['current']['temperature_2m']
+
+# Get temperature for different cities
+paris_temp = get_weather(48.85, 2.35)
+london_temp = get_weather(51.50, -0.12)
+tokyo_temp = get_weather(35.68, 139.69)
+
+print(f"Paris: {paris_temp}°C")
+print(f"London: {london_temp}°C")
+print(f"Tokyo: {tokyo_temp}°C")
+​
+How it works
+You send a request to the API’s URL with parameters (like coordinates)
+The API processes your request and finds the data
+You receive JSON data back with the information
+You extract the specific parts you need
+The pattern is always the same: connect to an API, send requests, get data back, use it in your code. APIs are how modern software talks to each other.
+
+Working with data
+Analyze and visualize data from APIs
+
+​
+Building on APIs
+Let’s take the weather API from the previous page and create something useful. We’ll get weather data for the past 7 days, analyze it, visualize it, and save it.
+This brings together everything you’ve learned: APIs, data processing, file handling, and visualization.
+Install required libraries: pip install requests pandas matplotlib
+​
+Get 7 days of weather
+The Open-Meteo API can give us historical data:
+import requests
+from datetime import datetime, timedelta
+
+# Calculate dates
+today = datetime.now()
+week_ago = today - timedelta(days=7)
+
+# Format dates for API (YYYY-MM-DD)
+start_date = week_ago.strftime("%Y-%m-%d")
+end_date = today.strftime("%Y-%m-%d")
+
+# Get Paris weather for past week
+url = f"https://api.open-meteo.com/v1/forecast?latitude=48.85&longitude=2.35&start_date={start_date}&end_date={end_date}&daily=temperature_2m_max,temperature_2m_min"
+
+response = requests.get(url)
+data = response.json()
+print(data)
+​
+Load into pandas
+Now let’s organize this data:
+import pandas as pd
+
+# Extract the daily data
+daily_data = data['daily']
+
+# Create a DataFrame
+df = pd.DataFrame({
+    'date': daily_data['time'],
+    'max_temp': daily_data['temperature_2m_max'],
+    'min_temp': daily_data['temperature_2m_min']
+})
+
+# Convert date strings to datetime
+df['date'] = pd.to_datetime(df['date'])
+
+print(df)
+Output:
+        date  max_temp  min_temp
+0 2024-01-08      12.3       5.1
+1 2024-01-09      11.8       4.2
+2 2024-01-10      13.5       6.0
+...
+​
+Visualize the data
+Create a simple line chart:
+import matplotlib.pyplot as plt
+
+# Create the plot
+plt.figure(figsize=(10, 6))
+plt.plot(df['date'], df['max_temp'], marker='o', label='Max Temp')
+plt.plot(df['date'], df['min_temp'], marker='o', label='Min Temp')
+
+# Add labels and title
+plt.xlabel('Date')
+plt.ylabel('Temperature (°C)')
+plt.title('Paris Weather - Past 7 Days')
+plt.legend()
+
+# Rotate x-axis labels for readability
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot
+plt.savefig('weather_chart.png')
+plt.show()
+​
+Save to CSV
+Let’s save our data for later use:
+import os
+
+# Create data folder if it doesn't exist
+if not os.path.exists('data'):
+    os.makedirs('data')
+
+# Save to CSV
+df.to_csv('data/paris_weather.csv', index=False)
+print("Data saved to data/paris_weather.csv")
+​
+Complete example
+Here’s everything together:
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+import os
+
+# 1. Get weather data
+today = datetime.now()
+week_ago = today - timedelta(days=7)
+start_date = week_ago.strftime("%Y-%m-%d")
+end_date = today.strftime("%Y-%m-%d")
+
+url = f"https://api.open-meteo.com/v1/forecast?latitude=48.85&longitude=2.35&start_date={start_date}&end_date={end_date}&daily=temperature_2m_max,temperature_2m_min"
+response = requests.get(url)
+data = response.json()
+
+# 2. Process with pandas
+df = pd.DataFrame({
+    'date': pd.to_datetime(data['daily']['time']),
+    'max_temp': data['daily']['temperature_2m_max'],
+    'min_temp': data['daily']['temperature_2m_min']
+})
+
+# 3. Calculate average
+df['avg_temp'] = (df['max_temp'] + df['min_temp']) / 2
+
+# 4. Create visualization
+plt.figure(figsize=(10, 6))
+plt.plot(df['date'], df['max_temp'], 'r-o', label='Max')
+plt.plot(df['date'], df['min_temp'], 'b-o', label='Min')
+plt.plot(df['date'], df['avg_temp'], 'g--', label='Average')
+
+plt.xlabel('Date')
+plt.ylabel('Temperature (°C)')
+plt.title('Paris Weather - Past Week')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# 5. Save everything
+if not os.path.exists('data'):
+    os.makedirs('data')
+
+plt.savefig('data/weather_chart.png')
+df.to_csv('data/paris_weather.csv', index=False)
+
+print(f"Average temperature: {df['avg_temp'].mean():.1f}°C")
+print("Files saved in 'data' folder")
+​
+What you’ve accomplished
+Look at what you just did:
+Connected to a real API
+Worked with dates and time
+Processed data with pandas
+Created a visualization
+Handled files and folders
+Saved your results
+This is exactly how data analysis works in the real world!
+Try modifying the code to get weather for your city. Find your coordinates at latlong.net.
+​

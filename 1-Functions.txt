@@ -1,0 +1,297 @@
+Functions: Create reusable blocks of code that do specific tasks. Instead of writing the same code multiple times, you write it once as a function and call it whenever needed.
+They Break complex programs into smaller pieces
+Fix bugs easier: Change code in one place, affects everywhere
+Test your code: Test each function separately
+​
+​
+Real-world examples
+Functions are everywhere in programming:
+print() - displays text (built-in function)
+len() - counts items (built-in function)
+calculate_tax() - your custom function
+send_email() - your custom function
+​
+Defining functions
+Create your own reusable functions
+
+​
+Your first function
+A function is a named block of code that performs a specific task. You define it once, then call it whenever you need that task done.
+def greet():
+    print("Hello, world!")
+    print("Welcome to Python!")
+
+# Call the function
+greet()
+​
+Function syntax
+Every function follows this pattern:
+def function_name():
+    # Code goes here
+    # Must be indented
+    pass
+Key parts:
+def - keyword that creates a function
+Function name followed by parentheses ()
+Colon : to start the function body
+Indented code block (the function body)
+​
+Naming functions
+Follow these rules for function names:
+Use lowercase letters
+Separate words with underscores
+Be descriptive about what it does
+# Good names
+def calculate_total():
+    pass
+
+def send_email():
+    pass
+
+def validate_password():
+    pass
+
+# Bad names
+def func1():  # Not descriptive
+    pass
+
+def Calculate():  # Should be lowercase
+    pass
+​
+Calling functions
+To use a function, call it by name with parentheses:
+def say_goodbye():
+    print("Goodbye!")
+    print("See you later!")
+
+# Call it multiple times
+say_goodbye()
+say_goodbye()
+say_goodbye()
+The power of functions: write once, use many times. The above code prints 6 lines with just 3 function calls!
+​
+Functions with logic
+Functions can contain any Python code:
+def check_weather():
+    temperature = 25
+    if temperature > 30:
+        print("It's hot!")
+    else:
+        print("Nice weather!")
+
+# Use the function
+check_weather()
+​
+Variable scope: Local vs Global
+Variables in Python have a “scope” - where they can be accessed and used.
+​
+Local variables
+Variables created inside a function only exist within that function:
+def calculate_price():
+    price = 100
+    tax = price * 0.1
+    print(f"Total: {price + tax}")
+
+calculate_price()  # Total: 110
+
+# This fails - price doesn't exist outside the function
+print(price)  # NameError: name 'price' is not defined
+​
+Global variables
+Variables created outside functions can be accessed anywhere:
+discount_rate = 0.15  # Global variable
+
+def apply_discount(price):
+    discount = price * discount_rate  # Can read global variable
+    return price - discount
+
+result = apply_discount(100)
+print(result)  # 85.0
+​
+Modifying global variables
+To change a global variable inside a function, use the global keyword:
+counter = 0  # Global variable
+
+def increment():
+    global counter  # Declare we want to modify the global variable
+    counter += 1
+
+increment()
+increment()
+print(counter)  # 2
+Avoid using global when possible. It makes code harder to understand and debug. Instead, pass values as parameters and return results.
+​
+Best practice: Use parameters and returns
+# Bad - using global variable
+total = 0
+
+def add_to_total(amount):
+    global total
+    total += amount
+
+# Good - using parameters and return
+def add_amounts(current_total, amount):
+    return current_total + amount
+
+total = 0
+total = add_amounts(total, 10)
+total = add_amounts(total, 20)
+print(total)  # 30
+When a local and global variable have the same name, the local variable “shadows” the global one inside the function. Python always uses the local version first.
+​
+Common mistakes
+Forgetting parentheses when calling
+
+Forgetting the colon
+
+Bad indentation
+
+​
+Parameters
+Pass data into your functions
+
+
+Parameters let you pass data into functions. Instead of hardcoding values, you make functions flexible to work with different inputs.
+# Without parameters (inflexible)
+def greet_alice():
+    print("Hello, Alice!")
+
+# With parameters (flexible)
+def greet(name):
+    print(f"Hello, {name}!")
+
+# Now it works for anyone
+greet("Alice")
+greet("Bob")
+greet("Charlie")
+​
+Basic parameters
+Add parameters inside the parentheses when defining a function:
+def introduce(name, age):
+    print(f"My name is {name}")
+    print(f"I am {age} years old")
+
+# Call with values
+introduce("Alice", 25)
+introduce("Bob", 30)
+The values you pass when calling a function are called “arguments”. The variables in the function definition are “parameters”. Many people use these terms interchangeably.
+​
+Multiple parameters
+Functions can have multiple parameters:
+def calculate_total(price, tax_rate, discount):
+    tax = price * tax_rate
+    final_price = price + tax - discount
+    print(f"Total: ${final_price}")
+
+# Order matters!
+calculate_total(100, 0.08, 10)  # $98
+​
+Default values
+Give parameters default values for optional arguments:
+def greet(name, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+# Use default
+greet("Alice")           # Hello, Alice!
+
+# Override default
+greet("Bob", "Hi")       # Hi, Bob!
+greet("Charlie", "Hey")  # Hey, Charlie!
+Put parameters with defaults at the end. Required parameters come first, optional ones last.
+​
+Keyword arguments
+Call functions using parameter names for clarity:
+def create_profile(name, age, city):
+    print(f"{name}, {age}, from {city}")
+
+# Positional arguments (order matters)
+create_profile("Alice", 25, "NYC")
+
+# Keyword arguments (order doesn't matter)
+create_profile(city="NYC", age=25, name="Alice")
+create_profile(name="Bob", city="LA", age=30)
+​
+Return values
+Get results back from your functions
+
+​
+# This function only prints
+def add_print(a, b):
+    print(a + b)
+
+# This function returns a value
+def add_return(a, b):
+    return a + b
+
+# Now you can use the result
+result = add_return(5, 3)
+print(f"The result is {result}")  # The result is 8
+​
+The return statement
+Use return to send a value back from a function:
+def calculate_area(width, height):
+    area = width * height
+    return area
+
+# Store the returned value
+room_area = calculate_area(10, 12)
+print(f"Room size: {room_area} sq ft")  # Room size: 120 sq ft
+When Python hits a return statement, it immediately exits the function. Any code after return won’t run.
+​
+Using returned values
+Returned values can be used in many ways:
+def double(number):
+    return number * 2
+
+# Store in variable
+result = double(5)
+
+# Use in expressions
+total = double(5) + double(3)  # 10 + 6 = 16
+
+# Pass to other functions
+print(double(10))  # 20
+
+# Use in conditions
+if double(7) > 10:
+    print("Big number!")
+​
+Returning multiple values
+Python can return multiple values as a tuple:
+def get_min_max(numbers):
+    return min(numbers), max(numbers)
+
+# Get both values
+minimum, maximum = get_min_max([5, 2, 8, 1, 9])
+print(f"Min: {minimum}, Max: {maximum}")  # Min: 1, Max: 9
+
+# Or as a tuple
+result = get_min_max([5, 2, 8, 1, 9])
+print(result)  # (1, 9)
+​
+Return vs print
+Understanding the difference is crucial:
+def get_greeting_print(name):
+    print(f"Hello, {name}!")  # Just displays
+
+def get_greeting_return(name):
+    return f"Hello, {name}!"  # Gives back value
+
+# Can't use print version's output
+message = get_greeting_print("Alice")  # Prints but returns None
+print(message)  # None
+
+# Can use return version's output
+message = get_greeting_return("Alice")  # Returns the string
+print(message.upper())  # HELLO, ALICE!
+Use return when you need to use the result elsewhere. Use print when you just want to display information.
+​
+Functions without return
+Functions without explicit return statements return None:
+def greet(name):
+    print(f"Hello, {name}!")
+    # No return statement
+
+result = greet("Alice")  # Prints: Hello, Alice!
+print(result)  # None
+​
