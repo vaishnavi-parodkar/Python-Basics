@@ -1,12 +1,8 @@
 External tools
 Extend Python with packages
 
-​
-Beyond built-in Python
-Python comes with many built-in functions, but its real power comes from external packages. These are pre-written code libraries that add new capabilities.
-​
 
-Packages are just Python files containing code - typically combinations of functions (which you’ve learned) and classes (coming later). When you import a package, you’re bringing that functionality into your project.
+Packages are just Python files containing code - typically combinations of functions and classes. When you import a package, you’re bringing that functionality into your project.
 Two types of packages:
 Built-in: Come with Python installation (already in your environment)
 External: Downloaded from the internet into your virtual environment folder
@@ -18,17 +14,9 @@ Data analysis: Process spreadsheets and databases
 AI/ML: Build intelligent applications
 APIs: Connect to online services
 Automation: Control your computer
-​
-What you’ll learn
-Import packages
-Use external code
-Work with APIs
-Connect to services
-Working with data
-Process data efficiently
+
 ​
 Package examples
-Here are packages you’ll likely use:
 requests - Make web requests
 pandas - Work with data tables
 beautifulsoup4 - Parse HTML
@@ -38,8 +26,6 @@ When you need to do something, search “Python package for [task]” and you’
 ​
 
 Import packages
-Use Python packages and libraries
-
 ​
 Using packages
 Python packages add new functionality to your programs. There are two types:
@@ -47,17 +33,12 @@ Built-in: Come with Python (no installation needed)
 External: Need to install first with pip
 ​
 Understanding the terminology
-Let’s clarify what these terms mean:
 Module: A single Python file (like math.py)
 Package: A folder containing multiple modules
 Function: A reusable block of code (like print() or sqrt())
 Class: A blueprint for creating objects (we’ll cover this later)
-Think of it like this:
-A module is like a toolbox
-A package is like a garage with multiple toolboxes
-A function is like a specific tool (hammer, screwdriver)
-A class is like a blueprint for building tools
-​
+
+
 Import patterns explained
 # Pattern 1: Import the whole module
 import math
@@ -66,10 +47,7 @@ import math
 # Pattern 2: Import specific items from a module
 from math import sqrt, pi
 # Now use: sqrt(16)
-What’s happening:
-import math - brings in the entire math toolbox
-from math import sqrt - takes just the sqrt tool from the math toolbox
-​
+
 Built-in modules
 Python includes many useful modules:
 # Import entire module
@@ -179,8 +157,8 @@ Working with APIs
 Pull data from web services
 
 
-An API (Application Programming Interface) is like a waiter at a restaurant. You tell it what you want, and it brings you the data.
-But APIs do more than just fetch information. They’re the bridges that connect your code to other systems. With APIs, you can:
+API (Application Programming Interface) 
+APIs do more than just fetch information. They’re the bridges that connect your code to other systems. With APIs, you can:
 Pull customer data from your CRM (Salesforce, HubSpot)
 Get order information from Shopify or WooCommerce
 Send messages through Slack or email services
@@ -224,7 +202,9 @@ The temperature is nested inside current, so to get it:
 temperature = data['current']['temperature_2m']
 print(f"Temperature in Paris: {temperature}°C")
 # Output: Temperature in Paris: 20.0°C
-What is JSON? JSON (JavaScript Object Notation) is just a way to structure data, similar to CSV or Excel files. While CSV stores data in rows and columns, JSON uses key-value pairs like Python dictionaries.
+
+
+JSON (JavaScript Object Notation) is just a way to structure data, similar to CSV or Excel files. While CSV stores data in rows and columns, JSON uses key-value pairs like Python dictionaries.
 ​
 Extract what you need
 Now you can pull out specific information:
@@ -391,15 +371,4 @@ df.to_csv('data/paris_weather.csv', index=False)
 
 print(f"Average temperature: {df['avg_temp'].mean():.1f}°C")
 print("Files saved in 'data' folder")
-​
-What you’ve accomplished
-Look at what you just did:
-Connected to a real API
-Worked with dates and time
-Processed data with pandas
-Created a visualization
-Handled files and folders
-Saved your results
-This is exactly how data analysis works in the real world!
-Try modifying the code to get weather for your city. Find your coordinates at latlong.net.
 ​

@@ -1,4 +1,4 @@
-Functions: Create reusable blocks of code that do specific tasks. Instead of writing the same code multiple times, you write it once as a function and call it whenever needed.
+Functions: reusable blocks of code that do specific tasks. Instead of writing the same code multiple times, you write it once as a function and call it whenever needed.
 They Break complex programs into smaller pieces
 Fix bugs easier: Change code in one place, affects everywhere
 Test your code: Test each function separately
@@ -11,10 +11,7 @@ len() - counts items (built-in function)
 calculate_tax() - your custom function
 send_email() - your custom function
 ​
-Defining functions
-Create your own reusable functions
 
-​
 Your first function
 A function is a named block of code that performs a specific task. You define it once, then call it whenever you need that task done.
 def greet():
@@ -139,19 +136,10 @@ total = add_amounts(total, 20)
 print(total)  # 30
 When a local and global variable have the same name, the local variable “shadows” the global one inside the function. Python always uses the local version first.
 ​
-Common mistakes
-Forgetting parentheses when calling
-
-Forgetting the colon
-
-Bad indentation
 
 ​
-Parameters
-Pass data into your functions
+Parameters: Pass data into your functions. Instead of hardcoding values, you make functions flexible to work with different inputs.
 
-
-Parameters let you pass data into functions. Instead of hardcoding values, you make functions flexible to work with different inputs.
 # Without parameters (inflexible)
 def greet_alice():
     print("Hello, Alice!")
