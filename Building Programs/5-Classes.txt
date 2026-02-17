@@ -222,8 +222,7 @@ print(validator.get_errors())
 When you call a method like validator.validate_email("test@example.com"), Python automatically passes the validator object as self. You only provide the other arguments.
 
 
-Inheritance
-Build on existing classes
+Inheritance: Build on existing classes
 inheritance can make your code much cleaner by avoiding repetition.
 
 ​

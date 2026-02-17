@@ -2,9 +2,8 @@ Error handling: Handle errors gracefully
 
 ​
 Errors happen. Files might not exist, APIs might be down, users might enter invalid data. Error handling lets your program deal with these problems gracefully instead of crashing.
-​
-Where do errors come from?
-Errors you make as a programmer:
+
+Common Errors:
 Typos and syntax mistakes (VS Code shows yellow squiggly lines)
 Logic errors like dividing by zero (only show up when code runs)
 Using variables before defining them
