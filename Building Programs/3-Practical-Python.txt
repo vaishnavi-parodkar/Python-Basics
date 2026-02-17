@@ -271,13 +271,6 @@ df = pd.read_excel('data/file.xlsx')
 with open('data/file.txt', 'r') as f:
     text = f.read()
 ​
-Learn more
-To dive deeper into file handling:
-Pandas documentation - Comprehensive data handling
-Python JSON module - Official JSON docs
-Real Python file I/O - Detailed tutorial
-CSV module docs - Built-in CSV handling
-
 
 Organizing code
 Split code into reusable functions
