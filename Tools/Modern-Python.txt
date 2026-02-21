@@ -1,0 +1,482 @@
+Modern Python
+Next-level development with uv
+
+​
+Enter uv: A modern Python package manager that’s:
+10-100x faster than pip
+Simpler to use
+More reliable
+All-in-one tool
+​
+The problem with pip
+Traditional Python development has pain points:
+Slow package installation
+Confusing virtual environment commands
+Different tools for different tasks
+Easy to mess up your environment
+​
+
+uv is a single tool that replaces:
+pip (package installer)
+venv (virtual environments)
+pip-tools (dependency management)
+pyenv (Python version management)
+Written in Rust, it’s blazingly fast and just works.
+​
+
+
+Why uv?
+The future of Python packaging
+
+
+
+install a package with pip vs uv:
+​
+With pip (traditional)
+pip install pandas
+# ⏱️ Takes 15-30 seconds
+​
+With uv (modern)
+uv pip install pandas
+# ⚡ Takes 1-2 seconds
+That’s 10-30x faster! And it gets better.
+​
+Real-world comparison
+Creating a new project:
+Traditional way
+With uv
+# Create virtual environment
+python -m venv .venv
+
+# Activate it (different per OS!)
+# Windows: .venv\Scripts\activate
+# Mac/Linux: source .venv/bin/activate
+
+# Install packages
+pip install requests pandas numpy
+
+# Save dependencies
+pip freeze > requirements.txt
+Time: ~45 seconds Commands: 4+ (varies by OS)
+​
+Why is uv so fast?
+Written in Rust - Compiled language, not interpreted Python
+Smart caching - Reuses downloaded files intelligently
+Parallel downloads - Gets multiple packages at once
+Better algorithms - Optimized dependency resolution
+​
+More than just speed
+​
+One tool, not five
+Traditional Python:
+pip for packages
+venv for virtual environments
+pip-compile for lock files
+pyenv for Python versions
+pipx for global tools
+With uv:
+uv does it all
+​
+It just works
+No more:
+“Did I activate my venv?”
+“Which Python am I using?”
+“Why is this package conflicting?”
+uv handles it automatically.
+​
+Modern features
+Lock files - Exact reproducible installs
+Workspace support - Multiple related projects
+Script running - Built-in task runner
+Python management - Install Python versions too
+​
+Installing uv
+One command for any system:
+Mac/Linux
+Windows
+curl -LsSf https://astral.sh/uv/install.sh | sh
+After installation, restart your terminal.
+​
+Quick commands
+Here’s what you need to know:
+# Create new project
+uv init my-project
+
+# Add packages
+uv add requests pandas
+
+# Install from existing project
+uv sync
+
+# Run Python
+uv run python script.py
+​
+Should you switch?
+Yes, if you want:
+Faster development
+Simpler commands
+Less confusion
+Modern tooling
+Maybe wait if:
+You’re in a team using pip
+You have complex legacy setups
+You’re just starting (learn basics first)
+uv is backwards compatible - it can read requirements.txt and work with existing projects!
+
+
+
+Using uv
+Create projects the modern way
+
+​
+Creating a new project
+Let’s create a real project with uv:
+# Create and enter project
+uv init ai-assistant
+cd ai-assistant
+This creates:
+ai-assistant/
+├── .gitignore      # Git ignore file
+├── .python-version # Python version for the project
+├── pyproject.toml  # Project configuration
+├── README.md       # Project readme
+└── main.py         # Example script
+The .venv folder and uv.lock file are created automatically when you first run uv add to install packages.
+​
+Understanding pyproject.toml
+This is your project’s configuration file:
+[project]
+name = "ai-assistant"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+It replaces:
+requirements.txt
+setup.py
+setup.cfg
+Multiple config files
+One file to rule them all!
+​
+Adding packages
+Add packages with uv add:
+# Add a package
+uv add requests
+
+# Add multiple packages
+uv add pandas numpy matplotlib
+
+# Add development dependencies
+uv add --dev pytest black
+Your pyproject.toml updates automatically:
+[project]
+name = "ai-assistant"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "requests>=2.32.0",
+    "pandas>=2.2.0",
+    "numpy>=1.26.0",
+    "matplotlib>=3.8.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0.0",
+    "black>=24.0.0",
+]
+​
+The lock file
+uv creates uv.lock - this locks exact versions:
+# uv.lock (auto-generated)
+version = 1
+requires-python = ">=3.12"
+
+[[package]]
+name = "requests"
+version = "2.32.3"
+dependencies = [
+    { name = "certifi" },
+    { name = "charset-normalizer" },
+    ...
+]
+This ensures everyone gets exactly the same packages.
+​
+Running your code
+Three ways to run Python with uv:
+# Method 1: uv run (recommended)
+uv run python main.py
+
+# Method 2: Activate venv (traditional)
+source .venv/bin/activate  # Mac/Linux
+# or
+.venv\Scripts\activate     # Windows
+
+# Method 3: Direct path
+.venv/bin/python main.py
+uv run is recommended - it always uses the right Python!
+​
+Common uv commands
+# Create new project
+uv init project-name
+
+# Add packages
+uv add package-name
+
+# Remove packages
+uv remove package-name
+
+# Install all dependencies
+uv sync
+
+# Update packages
+uv add --upgrade package-name
+
+# Show installed packages
+uv pip list
+
+# Run Python scripts
+uv run python script.py
+​
+Working with existing projects
+Got a project with requirements.txt? No problem:
+# Convert requirements.txt to pyproject.toml
+uv add -r requirements.txt
+
+# Or just install from requirements.txt
+uv pip install -r requirements.txt
+​
+Virtual environment details
+uv creates .venv automatically when you add packages:
+Created on first uv add command
+No activation needed with uv run
+Always in project directory
+Works with VS Code automatically
+Already in .gitignore (uv adds it)
+​
+Tips and tricks
+Global tools: Install tools globally with uv
+uv tool install black
+uv tool install mypy
+Python versions: uv can manage Python too
+uv python install 3.12
+uv python install 3.11
+Scripts: Add custom commands
+[project.scripts]
+start = "ai_assistant.main:run"
+test = "pytest tests/"
+
+
+
+
+Complete workflow
+Start to finish setup
+
+​
+New project checklist
+Follow these steps every time you start a new Python project.
+​
+Step 1: Open terminal
+Open your terminal:
+Mac: Terminal app or iTerm
+Windows: Terminal, Command Prompt, or PowerShell
+​
+Step 2: Navigate to your projects folder
+# Go to your projects directory
+cd ~/Documents/Projects  # Mac
+cd C:\Users\YourName\Documents\Projects  # Windows
+Create a dedicated folder for all your Python projects. This keeps things organized!
+​
+Step 3: Create the project
+Use uv to create your project:
+uv init my-awesome-project
+What happens:
+Creates a new folder my-awesome-project
+Creates .gitignore (Git will ignore .venv, .env, etc.)
+Creates .python-version (specifies Python version)
+Creates pyproject.toml (project configuration)
+Creates README.md (project description)
+Creates main.py (example file)
+Initial structure:
+my-awesome-project/
+├── .gitignore      # Git ignore rules
+├── .python-version # Python version
+├── pyproject.toml  # Project config
+├── README.md       # Project description
+└── main.py         # Example file
+The .venv folder is created automatically when you run uv add to install your first package. Same with uv.lock.
+​
+Step 4: Open in VS Code
+# Enter the project folder
+cd my-awesome-project
+
+# Open in VS Code
+code .
+What happens:
+VS Code opens with your project
+Python extension activates automatically
+Virtual environment is detected
+If code . doesn’t work, see the Git section for setup instructions.
+​
+Step 5: Add packages
+Open terminal in VS Code (Ctrl+`):
+# Add packages you need
+uv add requests
+uv add pandas numpy
+uv add python-dotenv
+
+# For interactive Python (optional)
+uv add ipykernel
+What happens:
+Packages download and install
+pyproject.toml updates with dependencies
+uv.lock locks exact versions
+​
+Step 6: Test your setup
+Edit main.py:
+import requests
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
+
+# Test the setup
+print("✅ Packages imported successfully!")
+
+# Test environment variable
+api_key = os.environ.get("API_KEY", "not-set")
+print(f"✅ API_KEY: {api_key}")
+
+# Test requests
+response = requests.get("https://api.github.com")
+print(f"✅ GitHub API status: {response.status_code}")
+Run it:
+uv run python main.py
+​
+Step 7: Set up environment variables
+Create .env for secrets:
+# .env
+API_KEY=your-secret-key-here
+DATABASE_URL=postgresql://localhost/mydb
+DEBUG=True
+Create .env.example for others:
+# .env.example
+API_KEY=your-api-key-here
+DATABASE_URL=your-database-url
+DEBUG=True
+Important: .env is already in .gitignore - your secrets are safe!
+​
+Step 8: Initialize Git
+# Initialize Git repository
+git init
+
+# Add all files
+git add .
+
+# First commit
+git commit -m "Initial commit"
+What happens:
+Git starts tracking your files
+All files except those in .gitignore are staged
+Your first snapshot is saved
+​
+Step 9: Create GitHub repository
+Create the repository directly from your terminal:
+Using GitHub CLI (Recommended)
+Using Git (Traditional)
+# Create private repository
+gh repo create my-awesome-project --private --source=. --remote=origin --push
+
+# Or create public repository
+gh repo create my-awesome-project --public --source=. --remote=origin --push
+What happens:
+Creates repository on GitHub
+Sets up remote connection
+Pushes your code automatically
+If you don’t have GitHub CLI, install it:
+Mac:
+brew install gh
+Windows:
+winget install --id GitHub.cli
+# Or download from cli.github.com
+Linux:
+# Debian/Ubuntu
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install gh
+After installing, authenticate with:
+gh auth login
+You’re done! Your project is now:
+Set up locally with uv
+Tracked by Git
+Backed up on GitHub
+​
+The daily workflow
+From here, your routine is:
+# Make changes to your code...
+
+# Add packages as needed
+uv add some-package
+
+# Commit changes
+git add .
+git commit -m "Add new feature"
+
+# Push to GitHub
+git push
+Prefer clicking? You can do all Git operations using VS Code’s UI:
+Source Control panel (Ctrl+Shift+G): Stage, commit, and push with clicks
+Status bar: Shows branch and sync button
+Command Palette (Ctrl+Shift+P): Type “Git” to see all commands
+See the Git & GitHub section for details!
+​
+Quick reference
+# Project setup (one time)
+uv init project-name
+cd project-name
+code .
+git init
+git add .
+git commit -m "Initial commit"
+gh repo create project-name --private --source=. --remote=origin --push
+
+# Daily development
+uv add package-name        # Add packages
+uv run python script.py    # Run code
+git add .                  # Stage changes
+git commit -m "message"    # Commit
+git push                   # Push to GitHub
+​
+Pro tips
+Commit often - Small commits are better than huge ones
+Write clear messages - “Fix login bug” not “updates”
+Use .env - Never hardcode secrets
+Keep it simple - Don’t over-engineer
+​
+Commands summary
+Here’s everything in one place:
+# Setup (one time)
+uv init my-project
+cd my-project
+code .
+uv add requests pandas python-dotenv
+uv add --dev ipykernel
+echo "API_KEY=your-key" > .env
+git init
+git add .
+git commit -m "Initial commit"
+gh repo create my-project --private --source=. --remote=origin --push
+
+# Daily workflow
+uv add package-name        # Add packages
+uv run python script.py    # Run code
+git add .                  # Stage changes
+git commit -m "message"    # Commit
+git push                   # Push to GitHub
+
